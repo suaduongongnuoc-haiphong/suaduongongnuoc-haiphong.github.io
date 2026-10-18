@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="vi">
-<head> <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4355804832740848"
-     crossorigin="anonymous"></script>
+<head> <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4355804832740848"></script>
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -245,18 +244,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(prefers-reduced-motion:reduce){#reviews .reviews{animation:none;}}
 
 
-/* BỔ SUNG: vừa tự chạy ngang vừa cho phép khách kéo/ vuốt để chọn nội dung */
+/* Các mục nội dung hiển thị thành MỘT hàng ngang, tự chạy và có thể kéo/vuốt để chọn */
 .article-marquee,
 #new-articles .new-articles-window,
 .drag-scroll-wrap {
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
   overflow-x:auto !important;
-  overflow-y:hidden;
+  overflow-y:hidden !important;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior-x:contain;
+  touch-action:pan-x pan-y;
   scrollbar-width:thin;
   scrollbar-color:#83b8ca #edf5f8;
   scroll-behavior:smooth;
   cursor:grab;
+  padding-bottom:12px;
 }
 .article-marquee:active,
 #new-articles .new-articles-window:active,
@@ -270,24 +276,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 #cases .drag-scroll-wrap.user-scrolling .video-grid,
 #youtube-videos .drag-scroll-wrap.user-scrolling .video-grid,
 #reviews .drag-scroll-wrap.user-scrolling .reviews {animation-play-state:paused !important;}
-/* Thanh bài kiến thức đầy đủ cũng chuyển thành dải kéo ngang */
-.knowledge-articles-full {
-  display:flex !important;
-  flex-wrap:nowrap !important;
-  overflow-x:auto;
-  overflow-y:hidden;
-  gap:18px;
-  padding:10px 2px 20px;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-x:contain;
-  scrollbar-width:thin;
-  scrollbar-color:#83b8ca #edf5f8;
-  cursor:grab;
-}
-.knowledge-article {flex:0 0 min(520px, 86vw); width:min(520px, 86vw);}
-.knowledge-articles-full:active {cursor:grabbing;}
+/* Chỉ dùng dải bài kiến thức dạng thẻ ngang phía trên; tránh lặp thêm một lưới bài dài bên dưới */
+.knowledge-articles-full {display:none !important;}
+#knowledge .article-track {align-items:stretch;flex-wrap:nowrap;}
+#new-articles .new-articles-track {align-items:stretch;}
+#cases .video-grid,
+#youtube-videos .video-grid,
+#reviews .reviews {flex-wrap:nowrap !important;}
+#cases .drag-scroll-wrap,
+#youtube-videos .drag-scroll-wrap,
+#reviews .drag-scroll-wrap {width:100%;max-width:100%;min-width:0;}
 @media(max-width:560px){
-  .knowledge-article{flex-basis:86vw;width:86vw;padding:18px;}
+  .article-card{flex-basis:82vw;width:82vw;padding:17px;}
+  #new-articles .new-article-preview{flex-basis:82vw;width:82vw;}
+  #cases .video-card,#youtube-videos .video-card,#reviews .review{flex-basis:82vw;width:82vw;}
   .article-marquee,#new-articles .new-articles-window,.drag-scroll-wrap{scrollbar-width:thin;}
 }
 </style></head>
@@ -361,7 +363,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <div class="head"><h2>KIẾN THỨC NƯỚC DÒ – RÒ RỈ &amp; THẤT THOÁT NƯỚC</h2>
 <p>Tổng hợp 6 bài kiến thức giúp nhận biết nguyên nhân tiền nước tăng cao, thất thoát nước, vị trí rò rỉ và cách xử lý ban đầu.</p></div>
 <div aria-label="Các bài viết kiến thức, bấm vào bài để xem chi tiết" class="article-marquee" id="knowledge-marquee"><div aria-live="polite" class="article-track" id="daily-articles"></div></div>
-<div class="knowledge-articles-full" aria-label="Bốn bài viết kiến thức về sự cố nước">
+<div aria-label="Bốn bài viết kiến thức về sự cố nước" class="knowledge-articles-full">
 <article class="knowledge-article" id="bai-viet-07"><span class="badge">KIẾN THỨC NƯỚC DÒ · BÀI 07</span>
 <h3>💧 Tiền nước tăng cao bất thường? Cẩn thận rò rỉ đường ống nước ngầm!</h3>
 <p>Tháng trước tiền nước chỉ vài trăm nghìn, tháng này bỗng tăng cao dù gia đình không sử dụng nhiều hơn? Đây có thể là dấu hiệu đường ống nước đang bị rò rỉ mà bạn chưa phát hiện ra.</p>
@@ -454,12 +456,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <button class="new-article-read" data-article-index="4" type="button">Đọc bài viết →</button>
 </article>
 <article class="new-article-preview">
-  <span class="badge">BÀI VIẾT MỚI · SỐ 06</span>
-  <h3>SỬA CHỮA NƯỚC DÒ THỦY NGUYÊN HẢI PHÒNG – CA THỰC TẾ TẠI TÂN DƯƠNG</h3>
-  <p>Ca sửa chữa nước dò tại nhà anh Tuấn, Tân Dương, Thủy Nguyên. Tiền nước tăng cao, đồng hồ vẫn quay khi không sử dụng. Minh Hiệp kiểm tra và hỗ trợ khoanh vùng vị trí nghi rò rỉ.</p>
-  <button class="new-article-read" data-article-index="5" type="button">Đọc bài viết →</button>
+<span class="badge">BÀI VIẾT MỚI · SỐ 06</span>
+<h3>SỬA CHỮA NƯỚC DÒ THỦY NGUYÊN HẢI PHÒNG – CA THỰC TẾ TẠI TÂN DƯƠNG</h3>
+<p>Ca sửa chữa nước dò tại nhà anh Tuấn, Tân Dương, Thủy Nguyên. Tiền nước tăng cao, đồng hồ vẫn quay khi không sử dụng. Minh Hiệp kiểm tra và hỗ trợ khoanh vùng vị trí nghi rò rỉ.</p>
+<button class="new-article-read" data-article-index="5" type="button">Đọc bài viết →</button>
 </article>
-</div>
+<article class="new-article-preview">
+<span class="badge">BÀI VIẾT MỚI · SỐ 07</span>
+<h3>🔧 Thợ sửa nước dò Hải Phòng – siêu âm rò rỉ âm tường, âm nền</h3>
+<p>Tiền nước tăng bất thường, đồng hồ vẫn quay hoặc tường, sàn bị ẩm? Tìm hiểu cách kiểm tra và khoanh vùng vị trí nghi rò trước khi sửa chữa.</p>
+<button class="new-article-read" data-article-index="6" type="button">Đọc bài viết →</button>
+</article></div>
 </div>
 <div class="new-articles-store" hidden="">
 <article class="article-card" style="max-width:900px;width:100%;margin:0 auto;flex-basis:auto;">
@@ -591,23 +598,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </article>
 <article class="article-card" style="max-width:900px;width:100%;margin:0 auto;flex-basis:auto;">
 <span class="badge">BÀI VIẾT MỚI · SỐ 06</span>
-
 <h3>🔧 SỬA CHỮA NƯỚC DÒ THỦY NGUYÊN HẢI PHÒNG – SIÊU ÂM NƯỚC DÒ RỈ TẠI TÂN DƯƠNG</h3>
-
 <p><strong>💧 CA SỬA CHỮA NƯỚC DÒ THỰC TẾ NHÀ ANH TUẤN TẠI TÂN DƯƠNG, THỦY NGUYÊN, HẢI PHÒNG</strong></p>
-
 <p>📞 <strong>ĐT/Zalo: <a href="tel:0941689899">0941 689 899</a></strong></p>
-
 <h3>🚨 ĐỒNG HỒ NƯỚC VẪN QUAY, TIỀN NƯỚC HƠN 1 TRIỆU ĐỒNG/THÁNG?</h3>
-
 <p>Gia đình anh Tuấn tại Tân Dương, Thủy Nguyên, Hải Phòng gặp tình trạng tiền nước tăng cao bất thường. Mặc dù không sử dụng nước nhưng đồng hồ vẫn có dấu hiệu quay, khiến gia đình nghi ngờ đường ống nước bị rò rỉ.</p>
-
 <p>Trước khi sửa chữa, cần kiểm tra và khoanh vùng vị trí nghi ngờ rò rỉ để tránh đục phá nhiều vị trí không cần thiết.</p>
-
 <h3>🔎 MINH HIỆP SIÊU ÂM NƯỚC DÒ – KIỂM TRA VÀ KHOANH VÙNG RÒ RỈ</h3>
-
 <p>Với thiết bị siêu âm dò rỉ nước, Minh Hiệp tiến hành kiểm tra đường ống, hỗ trợ xác định khu vực nghi ngờ có sự cố, từ đó lựa chọn vị trí cần kiểm tra và sửa chữa phù hợp.</p>
-
 <ul>
 <li>✅ Kiểm tra dấu hiệu thất thoát nước bất thường.</li>
 <li>✅ Hỗ trợ dò tìm đường ống nước rò rỉ âm tường, âm sàn.</li>
@@ -615,9 +613,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <li>✅ Hạn chế đục phá lan rộng không cần thiết.</li>
 <li>✅ Thống nhất phương án và chi phí trước khi thi công.</li>
 </ul>
-
 <h3>🛠️ KHI NÀO BẠN NÊN GỌI THỢ SIÊU ÂM NƯỚC DÒ?</h3>
-
 <ul>
 <li>🔹 Tiền nước tăng cao dù lượng nước sử dụng không thay đổi.</li>
 <li>🔹 Đồng hồ nước vẫn quay khi đã khóa các thiết bị sử dụng nước.</li>
@@ -625,21 +621,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <li>🔹 Tường, sàn hoặc trần nhà xuất hiện dấu hiệu ẩm, thấm.</li>
 <li>🔹 Đã kiểm tra nhiều lần nhưng chưa tìm được nguyên nhân.</li>
 </ul>
-
 <p>📍 <strong>KHU VỰC PHỤC VỤ:</strong> Thủy Nguyên, Hải Phòng và các khu vực lân cận; hỗ trợ các tỉnh miền Bắc theo yêu cầu.</p>
-
 <p>💧 Đừng vội đục phá khi chưa xác định được nguyên nhân. Kiểm tra đúng khu vực nghi ngờ có thể giúp giảm công sức, thời gian và chi phí sửa chữa.</p>
-
 <p>📞 <strong>LIÊN HỆ MINH HIỆP SIÊU ÂM NƯỚC DÒ</strong></p>
-
 <p><strong>Điện thoại/Zalo: <a href="tel:0941689899">0941 689 899</a></strong></p>
-
 <p><strong>THỢ SỬA CHỮA NƯỚC DÒ THỦY NGUYÊN HẢI PHÒNG – SIÊU ÂM DÒ RỈ NƯỚC, HỖ TRỢ KHOANH VÙNG VỊ TRÍ RÒ RỈ, HẠN CHẾ ĐỤC PHÁ.</strong></p>
-
 <p class="read-more">#SuaChuaNuocDoThuyNguyenHaiPhong #SieuAmNuocDoRiThuyNguyenHaiPhong #ThoSuaChuaNuocDoHaiPhong #SieuAmNuocDo #DoRiNuoc #ThatThoatNuoc #TienNuocTangCao #TanDuongThuyNguyen #MinhHiepSieuAmNuocDo</p>
 </article>
-
-</div>
+<article class="article-card">
+<h3>Thợ sửa nước dò Hải Phòng – siêu âm rò rỉ âm tường, âm nền</h3>
+<p>Khi đồng hồ nước vẫn quay dù đã khóa vòi, hóa đơn nước tăng bất thường hoặc tường, sàn xuất hiện vết ẩm, khách hàng có thể liên hệ dịch vụ <b>sửa nước dò Hải Phòng</b> và <b>siêu âm nước dò Hải Phòng</b>. Thợ kiểm tra hiện trạng, dùng thiết bị phù hợp để hỗ trợ khoanh vùng điểm nghi rò trước khi thống nhất phương án sửa chữa.</p>
+<p>Minh Hiệp nhận kiểm tra các trường hợp cần <b>thợ sửa nước dò âm tường Hải Phòng</b>, <b>thợ siêu âm dò và sửa chữa rò rỉ nước âm tường, âm nền tại Hải Phòng</b> và <b>sửa đường nước sạch Hải Phòng</b>. Phạm vi công việc và chi phí được trao đổi trước khi thi công; hiệu quả dò tìm phụ thuộc kết cấu công trình, loại ống và điều kiện thực tế.</p>
+<p>Phạm vi phục vụ theo lịch hẹn gồm các khu vực tại Hải Phòng như Lê Chân, Hải An, Ngô Quyền, Hồng Bàng, Thủy Nguyên, An Dương và Kiến An; đồng thời tiếp nhận yêu cầu tại Thái Bình, Quảng Ninh, Hải Dương và các tỉnh miền Bắc. Vui lòng liên hệ để xác nhận lịch, phạm vi công việc và chi phí di chuyển nếu có.</p>
+<p><b>Điện thoại/Zalo: <a href="tel:0941689899">0941 689 899</a></b> – liên hệ để mô tả tình trạng và xác nhận lịch khảo sát.</p>
+</article></div>
 </div>
 <div aria-hidden="true" aria-label="Nội dung bài viết" aria-modal="true" class="new-article-modal" id="newArticleModal" role="dialog">
 <div class="new-article-modal-panel">
@@ -840,7 +835,7 @@ async function copyRequest(){
   const modal=section.querySelector('#newArticleModal');
   const content=section.querySelector('#newArticleModalContent');
   const closeBtn=section.querySelector('.new-article-close');
-  // Duplicate cards only for a seamless moving strip; keep all six original articles as the reading source.
+  // Duplicate cards only for a seamless moving strip; keep all seven original articles as the reading source.
   track.insertAdjacentHTML('beforeend', track.innerHTML);
   track.querySelectorAll('.new-article-read').forEach(btn=>{
     btn.addEventListener('click',function(){
@@ -860,12 +855,15 @@ async function copyRequest(){
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))closeModal();});
 })();
 </script>
-
 <script>
 /* Kéo bằng chuột và vuốt tự nhiên trên điện thoại cho các dải nội dung ngang */
 (function(){
   /* Tạo vùng cuộn riêng quanh dải video/đánh giá để tiêu đề không bị kéo đi theo */
   [
+    ['#service .cards','#service'],
+    ['#technology .cards','#technology'],
+    ['.features','section'],
+    ['.process','section'],
     ['#cases .video-grid','#cases'],
     ['#youtube-videos .video-grid','#youtube-videos'],
     ['#reviews .reviews','#reviews']
@@ -881,6 +879,10 @@ async function copyRequest(){
     '.article-marquee',
     '.knowledge-articles-full',
     '#new-articles .new-articles-window',
+    '#service .drag-scroll-wrap',
+    '#technology .drag-scroll-wrap',
+    'section .drag-scroll-wrap:has(> .features)',
+    'section .drag-scroll-wrap:has(> .process)',
     '#cases .drag-scroll-wrap',
     '#youtube-videos .drag-scroll-wrap',
     '#reviews .drag-scroll-wrap'
@@ -889,6 +891,8 @@ async function copyRequest(){
     if(el.dataset.dragScrollReady === '1') return;
     el.dataset.dragScrollReady = '1';
     var down = false, startX = 0, startScroll = 0, moved = false;
+    /* Khi khách chạm/vuốt, dừng chuyển động tự động để họ tự chọn nội dung */
+    el.addEventListener('touchstart', function(){ el.classList.add('user-scrolling'); }, {passive:true});
     el.addEventListener('pointerdown', function(e){
       if(e.pointerType !== 'mouse' || e.button !== 0) return;
       down = true; moved = false; startX = e.clientX; startScroll = el.scrollLeft;
@@ -906,7 +910,8 @@ async function copyRequest(){
     function endDrag(){
       if(!down) return;
       down = false;
-      el.classList.remove('user-scrolling');
+      /* Giữ dải ở trạng thái tạm dừng sau khi kéo để khách có thời gian đọc/chọn */
+      if(moved){ el.classList.add('user-scrolling'); }
       if(moved){
         el.dataset.dragJustMoved = '1';
         setTimeout(function(){ delete el.dataset.dragJustMoved; }, 80);
@@ -923,6 +928,53 @@ async function copyRequest(){
   });
 })();
 </script>
-
 </body>
-</html>
+<style>
+/* Dịch vụ và thiết bị: một hàng thẻ ngang, vuốt trên điện thoại/kéo bằng chuột */
+#service .drag-scroll-wrap, #technology .drag-scroll-wrap {
+  display:block; width:100%; max-width:100%; min-width:0; overflow-x:auto !important;
+  overflow-y:hidden !important; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+  touch-action:pan-x pan-y; scrollbar-width:thin; padding:8px 2px 18px; cursor:grab;
+}
+#service .drag-scroll-wrap .cards, #technology .drag-scroll-wrap .cards {
+  display:flex !important; flex-flow:row nowrap !important; align-items:stretch; gap:18px;
+  width:max-content !important; max-width:none !important; margin:0; grid-template-columns:none !important;
+}
+#service .drag-scroll-wrap .cards > .card, #technology .drag-scroll-wrap .cards > .card {
+  box-sizing:border-box; flex:0 0 320px !important; width:320px !important; max-width:82vw; min-width:0;
+}
+#service .drag-scroll-wrap .card img, #technology .drag-scroll-wrap .card img {max-width:100%; object-fit:cover;}
+#service .drag-scroll-wrap:active, #technology .drag-scroll-wrap:active {cursor:grabbing;}
+@media(max-width:560px) {
+  #service .drag-scroll-wrap .cards > .card, #technology .drag-scroll-wrap .cards > .card {
+    flex-basis:82vw !important; width:82vw !important;
+  }
+}
+/* Lý do nên dò trước khi đục phá và quy trình: một hàng ngang có thể vuốt/kéo */
+section .drag-scroll-wrap:has(> .features),
+section .drag-scroll-wrap:has(> .process) {
+  display:block; width:100%; max-width:100%; min-width:0;
+  overflow-x:auto !important; overflow-y:hidden !important;
+  -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+  touch-action:pan-x pan-y; scrollbar-width:thin;
+  padding:8px 2px 16px; cursor:grab;
+}
+section .drag-scroll-wrap > .features,
+section .drag-scroll-wrap > .process {
+  display:flex !important; flex-flow:row nowrap !important; align-items:stretch;
+  gap:16px; width:max-content !important; max-width:none !important;
+  margin:0; grid-template-columns:none !important;
+}
+section .drag-scroll-wrap > .features > .feature,
+section .drag-scroll-wrap > .process > .step {
+  box-sizing:border-box; flex:0 0 255px !important; width:255px !important;
+  max-width:82vw; min-width:0; height:auto;
+}
+section .drag-scroll-wrap:active {cursor:grabbing;}
+@media(max-width:560px) {
+  section .drag-scroll-wrap > .features > .feature,
+  section .drag-scroll-wrap > .process > .step {
+    flex-basis:78vw !important; width:78vw !important;
+  }
+}
+</style></head></html>
