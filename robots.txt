@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://suaduongongnuoc-haiphong.github.io/sitemap.xml
