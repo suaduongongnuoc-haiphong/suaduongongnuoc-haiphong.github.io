@@ -386,6 +386,22 @@ footer{overflow-wrap:anywhere}
 #new-articles .new-articles-window:not([hidden]){margin-top:18px}
 @media(max-width:600px){#new-articles .new-articles-toggle{width:100%;max-width:360px;white-space:normal}}
 </style>
+<style id="two-card-tabs-polish">
+/* Mỗi mục trình bày ba thẻ trước; các thẻ còn lại mở bằng nút và vẫn xếp ngang. */
+#knowledge .knowledge-featured-row,#knowledge .knowledge-more-window{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;}
+#knowledge .article-track{animation:none!important;transform:none!important;width:max-content;}
+#knowledge .knowledge-more-window[hidden],#new-articles .new-articles-window[hidden]{display:none!important;}
+#knowledge .knowledge-more-window:not([hidden]),#new-articles .new-articles-window:not([hidden]){margin-top:14px;}
+#knowledge .knowledge-toggle,#new-articles .new-articles-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 0;padding:11px 19px;border:0;border-radius:999px;background:linear-gradient(135deg,#087eaa,#075985);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 7px 18px rgba(7,89,133,.18);}
+#knowledge .knowledge-toggle:focus-visible,#new-articles .new-articles-toggle:focus-visible{outline:3px solid #f0b429;outline-offset:3px;}
+#knowledge .knowledge-more-controls,#new-articles .new-articles-more-controls{display:flex;justify-content:center;}
+#new-articles .new-articles-featured-window,#new-articles .new-articles-window{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:8px 2px 17px;}
+#new-articles .new-articles-featured,#new-articles .new-articles-track{display:flex;align-items:stretch;gap:18px;width:max-content;}
+#new-articles .new-article-preview{box-sizing:border-box;flex:0 0 300px;width:300px;max-width:82vw;padding:20px;}
+#new-articles .new-articles-featured-window{margin-top:12px;}
+#knowledge .knowledge-articles-full[hidden]{display:none!important;}
+@media(max-width:560px){#new-articles .new-article-preview{flex-basis:270px;width:270px;padding:17px;}#knowledge .article-card{flex-basis:270px;width:270px;}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Bỏ qua điều hướng, đến nội dung chính</a>
@@ -454,9 +470,11 @@ footer{overflow-wrap:anywhere}
 </div></div></section>
 <section class="pale" id="knowledge"><div class="wrap">
 <div class="head"><h2>KIẾN THỨC NƯỚC DÒ – RÒ RỈ &amp; THẤT THOÁT NƯỚC</h2>
-<p>Tổng hợp 6 bài kiến thức giúp nhận biết nguyên nhân tiền nước tăng cao, thất thoát nước, vị trí rò rỉ và cách xử lý ban đầu.</p></div>
-<div aria-label="Các bài viết kiến thức, bấm vào bài để xem chi tiết" class="article-marquee" id="knowledge-marquee"><div aria-live="polite" class="article-track" id="daily-articles"></div></div>
-<div aria-label="Bốn bài viết kiến thức về sự cố nước" class="knowledge-articles-full">
+<p>Tổng hợp 10 bài kiến thức về tiền nước tăng cao, đồng hồ nước tự quay, rò rỉ đường ống và tình trạng thấm trần. Ba bài nổi bật được hiển thị trước; các bài còn lại nằm trong danh sách mở rộng.</p></div>
+<div aria-label="Ba bài viết kiến thức nổi bật" class="article-marquee knowledge-featured-row" id="knowledge-marquee"><div aria-live="polite" class="article-track" id="daily-articles"></div></div>
+<div class="knowledge-more-controls"><button class="knowledge-toggle" type="button" aria-expanded="false" aria-controls="knowledgeMoreList">📚 Xem thêm kiến thức</button></div>
+<div aria-label="Các bài viết kiến thức khác, xếp hàng ngang" class="article-marquee knowledge-more-window" id="knowledgeMoreList" hidden><div class="article-track" id="daily-articles-more"></div></div>
+<div aria-label="Bốn bài viết kiến thức về sự cố nước" class="knowledge-articles-full" hidden>
 <article class="knowledge-article" id="bai-viet-07"><span class="badge">KIẾN THỨC NƯỚC DÒ · BÀI 07</span>
 <h3>💧 Tiền nước tăng cao bất thường? Cẩn thận rò rỉ đường ống nước ngầm!</h3>
 <p>Tháng trước tiền nước chỉ vài trăm nghìn, tháng này bỗng tăng cao dù gia đình không sử dụng nhiều hơn? Đây có thể là dấu hiệu đường ống nước đang bị rò rỉ mà bạn chưa phát hiện ra.</p>
@@ -503,21 +521,25 @@ footer{overflow-wrap:anywhere}
     {num: 10, title: "Thấm trần, thấm tường do rò nước: Tìm đúng nguyên nhân", desc: "Phân biệt dấu hiệu thấm và kiểm tra nguy cơ rò rỉ đường ống nước."}
   ];
   const target = document.getElementById('daily-articles');
-  if (!target) return;
+  const moreTarget = document.getElementById('daily-articles-more');
+  if (!target || !moreTarget) return;
   const cards = posts.map(p => {
     const num = String(p.num).padStart(2,'0');
     const href = 'kien-thuc/#bai-viet-' + num;
     return '<a class="article-card" href="' + href + '" aria-label="Đọc bài viết: ' + p.title.replace(/"/g,'&quot;') + '"><span class="badge">KIẾN THỨC · BÀI ' + num + '</span><h3>' + p.title + '</h3><p>' + p.desc + '</p><span class="read-more">Bấm để đọc bài viết →</span></a>';
-  }).join('');
-  /* Lặp dải bài viết để chuyển động liền mạch; mọi thẻ đều mở bài tương ứng. */
-  target.innerHTML = cards + cards;
+  });
+  /* Chỉ hiện 3 bài nổi bật; các bài còn lại mở ra trong một dải cuộn ngang. */
+  target.innerHTML = cards.slice(0,3).join('');
+  moreTarget.innerHTML = cards.slice(3).join('');
 })();
 </script>
 <section class="pale" id="new-articles"><div class="wrap">
 <div class="head"><h2>BÀI VIẾT MỚI</h2>
-<p>Chọn bài viết kiến thức và hướng dẫn theo từng khu vực Hải Phòng. Nhấn nút bên dưới để mở danh sách; sau đó vuốt hoặc kéo ngang để chọn bài muốn xem.</p>
-<button class="new-articles-toggle" type="button" aria-expanded="false" aria-controls="newArticlesList">📚 Xem danh sách bài viết mới</button></div>
-<div aria-label="Danh sách bài viết mới chạy ngang" class="new-articles-window" id="newArticlesList" hidden>
+<p>Ba bài viết mới được hiển thị trước. Bấm “Xem thêm bài viết mới” để chọn các bài khác; danh sách được xếp hàng ngang và có thể vuốt hoặc kéo ngang.</p>
+</div>
+<div aria-label="Ba bài viết mới nổi bật" class="new-articles-featured-window"><div class="new-articles-featured" id="newArticlesFeatured"></div></div>
+<div class="new-articles-more-controls"><button class="new-articles-toggle" type="button" aria-expanded="false" aria-controls="newArticlesList">📚 Xem thêm bài viết mới</button></div>
+<div aria-label="Các bài viết mới khác chạy ngang" class="new-articles-window" id="newArticlesList" hidden>
 <div class="new-articles-track">
 <article class="new-article-preview">
 <span class="badge">BÀI VIẾT MỚI · SỐ 01</span>
@@ -1135,7 +1157,7 @@ async function copyRequest(){
   const content=section.querySelector('#newArticleModalContent');
   const closeBtn=section.querySelector('.new-article-close');
   // Duplicate cards only for a seamless moving strip; keep the original article cards as the reading source.
-  track.insertAdjacentHTML('beforeend', track.innerHTML);
+  /* Không nhân đôi thẻ: hai bài đầu hiển thị sẵn, các bài còn lại mở theo nút. */
   track.querySelectorAll('button.new-article-read[data-article-index]').forEach(btn=>{
     btn.addEventListener('click',function(){
       const idx=Number(this.getAttribute('data-article-index'));
@@ -1309,17 +1331,37 @@ async function copyRequest(){
 })();
 </script>
 
+<script id="knowledge-toggle-script">
+(function(){
+  var section=document.getElementById('knowledge');
+  if(!section)return;
+  var list=section.querySelector('#knowledgeMoreList');
+  var button=section.querySelector('.knowledge-toggle');
+  if(!list||!button)return;
+  function setOpen(open){
+    list.hidden=!open;
+    button.setAttribute('aria-expanded',String(open));
+    button.textContent=open?'✕ Thu gọn kiến thức':'📚 Xem thêm kiến thức';
+  }
+  button.addEventListener('click',function(){setOpen(list.hidden);});
+})();
+</script>
 <script id="new-articles-toggle-script">
 (function(){
   var section=document.getElementById('new-articles');
   if(!section) return;
   var list=document.getElementById('newArticlesList');
   var button=section.querySelector('.new-articles-toggle');
-  if(!list||!button) return;
+  var featured=section.querySelector('#newArticlesFeatured');
+  var track=section.querySelector('.new-articles-track');
+  if(!list||!button||!featured||!track) return;
+  /* Chuyển ba bài đầu ra hàng nổi bật; phần còn lại nằm trong danh sách thu gọn. */
+  var cards=Array.from(track.querySelectorAll(':scope > .new-article-preview'));
+  cards.slice(0,3).forEach(function(card){featured.appendChild(card);});
   function setOpen(open, scrollToList){
     list.hidden=!open;
     button.setAttribute('aria-expanded',String(open));
-    button.textContent=open?'✕ Ẩn danh sách bài viết mới':'📚 Xem danh sách bài viết mới';
+    button.textContent=open?'✕ Thu gọn bài viết mới':'📚 Xem thêm bài viết mới';
     if(open && scrollToList){
       window.setTimeout(function(){
         button.scrollIntoView({behavior:'smooth',block:'center'});
