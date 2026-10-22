@@ -327,6 +327,56 @@ section .drag-scroll-wrap:active {cursor:grabbing;}
   }
 }
 </style>
+
+<style id="final-usability-polish">
+/* Hoàn thiện giao diện: rõ thứ bậc, dễ đọc, giữ nguyên các dải nội dung chạy ngang */
+:root{--focus-ring:#ffbf5f}
+html{scroll-padding-top:110px}
+body{letter-spacing:0}
+.top .wrap{align-items:center}
+header .nav{min-width:0}
+.brand{flex-shrink:0}
+.hero .actions .btn{min-width:155px}
+.hero-card{border:1px solid #e4edf1}
+.signal{align-items:flex-start}
+.signal small{display:inline-block;line-height:1.55;margin-top:3px;color:#526b79}
+.head{padding-inline:4px}
+.card,.video-card,.review,.feature,.step,.knowledge-article,.new-article-preview{box-shadow:0 5px 20px rgba(7,51,73,.055)}
+.card p,.feature p,.step p,.review p,.knowledge-article p{overflow-wrap:break-word}
+.btn:focus-visible,.links a:focus-visible,.float a:focus-visible,.mobile-contact-bar a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
+#send .upload-box>div:first-child{max-width:560px}
+#send .formbox{box-shadow:0 12px 34px rgba(0,15,26,.12)}
+#send .formbox .btn{margin-top:5px}
+#send .form-note{line-height:1.6}
+footer{overflow-wrap:anywhere}
+@media(max-width:900px){
+  /* Thanh điều hướng trên điện thoại có thể vuốt ngang; không làm vỡ các dải bài viết/video */
+  header .nav{flex-wrap:wrap}
+  header .links{display:flex!important;order:3;flex:1 0 100%;width:100%;max-width:100%;min-width:0;gap:18px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:7px 2px 9px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  header .links a{flex:0 0 auto;padding:5px 0;font-size:12px}
+  header .nav>.btn{flex:0 0 auto}
+  .hero .actions{display:grid;grid-template-columns:1fr 1fr}
+  .hero .actions .btn{min-width:0}
+}
+@media(max-width:560px){
+  html{scroll-padding-top:125px}
+  .top .wrap{line-height:1.5}
+  .hero h1{letter-spacing:-.025em}
+  .hero .actions{grid-template-columns:1fr}
+  .hero-card{margin-top:2px}
+  .signal{gap:10px;padding:12px 0}
+  .signal .ico{width:34px;height:34px;flex-basis:34px}
+  .head h2{overflow-wrap:break-word}
+  #send .upload-box{gap:16px}
+  #send .formbox{min-width:0}
+  #send .formbox .btn{width:100%;margin-right:0}
+  .mobile-contact-bar{padding:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  .btn,.card,.video-card,.review,.feature,.step{transition:none}
+}
+</style>
+
 </head>
 <body>
 <a class="skip-link" href="#main-content">Bỏ qua điều hướng, đến nội dung chính</a>
@@ -338,15 +388,15 @@ section .drag-scroll-wrap:active {cursor:grabbing;}
 <div class="top"><div class="wrap"><span>💧 MINH HIỆP • SIÊU ÂM DÒ RÒ RỈ NƯỚC</span><span>Hải Phòng &amp; miền Bắc • Hotline/Zalo 0941 689 899</span></div></div>
 <header><div class="wrap nav">
 <a class="brand" href="#home"><span class="brand-mark">💧</span><span>MINH HIỆP<br/>SIÊU ÂM DÒ RÒ RỈ NƯỚC</span></a>
-<nav class="links"><a href="#service">Dịch vụ</a><a href="#technology">Thiết bị</a><a href="#cases">Video công trình</a><a href="#knowledge">Kiến thức nước dò</a><a href="#new-articles">Bài viết mới</a><a href="kien-thuc/">Thư viện kiến thức</a><a href="#reviews">Đánh giá</a><a href="#contact">Liên hệ</a></nav>
+<nav class="links"><a href="#service">Dịch vụ</a><a href="#technology">Thiết bị</a><a href="#cases">Video công trình</a><a href="#knowledge">Kiến thức nước dò</a><a href="#new-articles">Bài viết mới</a><a href="kien-thuc/">Thư viện kiến thức</a><a href="#reviews">Đánh giá</a><a href="#send">Liên hệ</a></nav>
 <a class="btn" href="tel:0941689899">☎ Gọi ngay</a>
 </div></header>
-<main id="home" tabindex="-1">
-<section class="hero"><div class="wrap grid">
+<main id="main-content" tabindex="-1">
+<section class="hero" id="home"><div class="wrap grid">
 <div>
 <span class="eyebrow">KHẢO SÁT • SIÊU ÂM DÒ TÌM • TƯ VẤN SỬA CHỮA</span>
 <h1>SỬA NƯỚC DÒ HẢI PHÒNG<br/>HẠN CHẾ ĐỤC PHÁ</h1>
-<p>Minh Hiệp cung cấp dịch vụ siêu âm dò rò rỉ nước Hải Phòng, dò tìm rò rỉ đường ống ngầm, kiểm tra nước rò âm tường và âm sàn tại Hải Phòng cùng các tỉnh miền Bắc. Khi tiền nước tăng cao bất thường, đồng hồ nước tự quay dù đã khóa vòi hoặc tường nền bị thấm ẩm, anh/chị có thể liên hệ để được trao đổi phương án kiểm tra. Thiết bị chuyên dụng hỗ trợ khoanh vùng vị trí nghi rò, giúp hạn chế đục phá không cần thiết.</p>
+<p>Minh Hiệp nhận siêu âm dò rò rỉ nước tại Hải Phòng và các tỉnh miền Bắc. Kiểm tra đường ống âm tường, âm sàn, đường ống ngầm khi tiền nước tăng cao bất thường, đồng hồ vẫn quay dù không sử dụng hoặc tường nền bị thấm ẩm. Thiết bị chuyên dụng hỗ trợ khoanh vùng vị trí nghi rò, giúp hạn chế đục phá không cần thiết. Anh/chị được trao đổi phương án và thống nhất chi phí trước khi sửa.</p>
 <div class="actions"><a class="btn" href="tel:0941689899">☎ 0941 689 899</a><a class="btn blue" href="https://zalo.me/0941689899" rel="noopener" target="_blank">💬 Nhắn Zalo</a></div>
 <p class="hero-note">✓ Khảo sát hiện trạng   ✓ Trao đổi phương án   ✓ Thống nhất chi phí trước khi sửa</p>
 </div>
@@ -941,7 +991,7 @@ section .drag-scroll-wrap:active {cursor:grabbing;}
 <p class="note">MINH HIỆP SIÊU ÂM DÒ RÒ RỈ NƯỚC HẢI PHÒNG – 0941 689 899. TẬN TÂM, MINH BẠCH, TẠO NIỀM TIN CHO KHÁCH HÀNG.</p>
 </div></section>
 <section class="upload" id="send"><div class="wrap upload-box">
-<div><h2>GỬI ẢNH HIỆN TRẠNG ĐỂ ĐƯỢC TƯ VẤN</h2><p>Chọn ảnh đồng hồ nước, tường ẩm, trần sàn hoặc vị trí nghi rò. Website sẽ xem trước ảnh và tạo nội dung để anh/chị sao chép gửi qua Zalo.</p><p><b>Hotline/Zalo: 0941 689 899</b></p></div>
+<div><h2>GỬI ẢNH HIỆN TRẠNG ĐỂ ĐƯỢC TƯ VẤN</h2><p>Chọn ảnh đồng hồ nước, tường ẩm, trần sàn hoặc vị trí nghi rò. Anh/chị có thể xem trước ảnh đã chọn và tạo tin nhắn để sao chép gửi qua Zalo. Ảnh không tự tải lên website.</p><p><b>Hotline/Zalo: 0941 689 899</b></p></div>
 <div class="formbox">
 <div class="field"><label for="name">Họ tên / tên gọi</label><input autocomplete="name" id="name" placeholder="Ví dụ: Anh Minh"/></div>
 <div class="field"><label for="phone">Số điện thoại</label><input autocomplete="tel" id="phone" inputmode="tel" placeholder="Số điện thoại liên hệ"/></div>
