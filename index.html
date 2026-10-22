@@ -377,6 +377,15 @@ footer{overflow-wrap:anywhere}
 }
 </style>
 
+
+<style id="new-articles-collapsible">
+#new-articles .new-articles-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 0;padding:12px 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#087eaa,#075985);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 7px 18px rgba(7,89,133,.18);transition:transform .18s,box-shadow .18s}
+#new-articles .new-articles-toggle:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(7,89,133,.24)}
+#new-articles .new-articles-toggle:focus-visible{outline:3px solid #f0b429;outline-offset:3px}
+#new-articles .new-articles-window[hidden]{display:none!important}
+#new-articles .new-articles-window:not([hidden]){margin-top:18px}
+@media(max-width:600px){#new-articles .new-articles-toggle{width:100%;max-width:360px;white-space:normal}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Bỏ qua điều hướng, đến nội dung chính</a>
@@ -506,8 +515,9 @@ footer{overflow-wrap:anywhere}
 </script>
 <section class="pale" id="new-articles"><div class="wrap">
 <div class="head"><h2>BÀI VIẾT MỚI</h2>
-<p>Chọn bài viết kiến thức và hướng dẫn theo từng khu vực Hải Phòng. Vuốt ngang để xem thêm; nhấn “Đọc bài viết” để xem dấu hiệu rò rỉ, quy trình kiểm tra và cách liên hệ.</p></div>
-<div aria-label="Danh sách bài viết mới chạy ngang" class="new-articles-window">
+<p>Chọn bài viết kiến thức và hướng dẫn theo từng khu vực Hải Phòng. Nhấn nút bên dưới để mở danh sách; sau đó vuốt hoặc kéo ngang để chọn bài muốn xem.</p>
+<button class="new-articles-toggle" type="button" aria-expanded="false" aria-controls="newArticlesList">📚 Xem danh sách bài viết mới</button></div>
+<div aria-label="Danh sách bài viết mới chạy ngang" class="new-articles-window" id="newArticlesList" hidden>
 <div class="new-articles-track">
 <article class="new-article-preview">
 <span class="badge">BÀI VIẾT MỚI · SỐ 01</span>
@@ -1296,6 +1306,32 @@ async function copyRequest(){
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initAutoHorizontal);
   else initAutoHorizontal();
+})();
+</script>
+
+<script id="new-articles-toggle-script">
+(function(){
+  var section=document.getElementById('new-articles');
+  if(!section) return;
+  var list=document.getElementById('newArticlesList');
+  var button=section.querySelector('.new-articles-toggle');
+  if(!list||!button) return;
+  function setOpen(open, scrollToList){
+    list.hidden=!open;
+    button.setAttribute('aria-expanded',String(open));
+    button.textContent=open?'✕ Ẩn danh sách bài viết mới':'📚 Xem danh sách bài viết mới';
+    if(open && scrollToList){
+      window.setTimeout(function(){
+        button.scrollIntoView({behavior:'smooth',block:'center'});
+      },80);
+    }
+  }
+  button.addEventListener('click',function(){setOpen(list.hidden,false);});
+  document.querySelectorAll('a[href="#new-articles"]').forEach(function(link){
+    link.addEventListener('click',function(){setOpen(true,false);});
+  });
+  /* Nếu trang được mở bằng liên kết trực tiếp tới #new-articles thì mở danh sách. */
+  if(window.location.hash==='#new-articles') setOpen(true,false);
 })();
 </script>
 </body>
